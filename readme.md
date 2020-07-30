@@ -117,3 +117,5 @@ print_board(board)
 
 ```
  
+## Image Of Input and Output :- ##
+![Input/Output](I_O.png)
