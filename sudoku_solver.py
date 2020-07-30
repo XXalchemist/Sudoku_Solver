@@ -33,12 +33,67 @@ def print_board(bo):
             else:
                 print(str(bo[i][j])+" ",end ='')
 
-print_board(board)            
+           
 
 # To find empty positions in given sudoku board
 
 def find_empty(bo):
     for i in range(len(bo)):
         for j in range(len(bo[0])):
-            if b[i][j] == '-':
+            if bo[i][j] == '-':
                 return (i,j) # (row,col)
+    return None
+
+# To check that the given position is valid or not
+
+def valid(bo, num, pos):
+    
+    # check row
+    for i in range(len(bo[0])):
+        if bo[pos[0]][i] == num and pos[1] != i:
+            return False
+    
+    # check column
+    for i in range(len(bo)):
+        if bo[i][pos[1]] == num and pos[0] != i:
+            return False
+
+    # check 3 x 3 grid
+
+    box_x = pos[1]//3
+    box_y = pos[0]//3
+    
+    for i in range(box_y*3, box_y*3+3):
+        for j in range(box_x*3, box_x*3+3):
+            if bo[i][j] == num and (i,j) != pos:
+                return False
+    return True
+
+# Solve function
+
+def solve(bo):
+    find = find_empty(bo)
+    if not find: # Base condition
+        return True
+    else: # Backtrack
+        row, col = find
+
+    for i in range(1,10):
+        if valid(bo, i, (row, col)):
+            bo[row][col] = i
+
+            if solve(bo):
+                return True
+            bo[row][col] = '-'
+    return False
+
+# Driver Function
+
+print('------------ Given Sudoku Board -----------------\n')
+print_board(board)
+print('------------ __________________ -----------------\n')
+print('Solving......\n3...\n2...\n1..\n--------Solution---------')
+print('\n')
+solve(board)
+print_board(board)
+print('\nDone....')
