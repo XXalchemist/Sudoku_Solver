@@ -26,9 +26,19 @@ def print_board(bo):
         for j in range(len(bo[0])):
             if j%3==0 and j!=0:
                 print('|', end=' ')
+        
+        # Printing Numbers        
             if j == 8:
                 print(bo[i][j])
             else:
                 print(str(bo[i][j])+" ",end ='')
 
 print_board(board)            
+
+# To find empty positions in given sudoku board
+
+def find_empty(bo):
+    for i in range(len(bo)):
+        for j in range(len(bo[0])):
+            if b[i][j] == '-':
+                return (i,j) # (row,col)
